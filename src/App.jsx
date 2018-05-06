@@ -5,52 +5,55 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     console.log('构造函数只执行一次');
-    this.handleClick = this.handleClick.bind(this)
+    this.handleNum = this.handleNum.bind(this);
+    this.handleTitle = this.handleTitle.bind(this);
     this.state = {
       num: 1,
       title: 'Demo'
-    }
-    this.style = {
-      color: 'red'
-    }
+    };
   }
-  handleClick() {
-    // console.log('test');
+  handleNum() {
     this.setState({
       num: this.state.num + 1,
     });
   }
+  handleTitle() {
+    if (this.state.num % 2 === 0) {
+      this.setState({
+        title: '偶数'
+      });
+    } else {
+      this.setState({
+          title: '奇数'
+        });
+    }
+  }
   render() {
-    const item = {demo: 'demo'}
-    console.log('render');
     return (
       <div>
-        <h2>每一次渲染render bind都会执行一次, {this.state.num}</h2>
-        <button onClick={this.handleClick.bind(this)}>按钮1</button>
-
-        <p>下面两种情况是一样的，每一次渲染render 都要重新生成一个对象传递</p>
-        <button onClick={() => this.handleClick()}>按钮2</button>
-        <Demo style={{color: 'red'}} name={{demo: 'demo'}} />
-
-        <p>如果只需要传递一个属性，但是却额外传递了其他的属性进去也是不推荐的</p>
-        <Demo title={this.state.title} />
-        <Demo {...this.state} />
-
         <p>推荐写法，性能较优</p>
-        <button onClick={this.handleClick}>推荐写法</button>
-        <Demo style={this.style} name={{item}} />
+        { this.state.num }
+        <button onClick={this.handleNum}>修改数字</button>
+        <button onClick={this.handleTitle}>修改标题</button>
+        <Demo style={this.style} name={this.state.title} />
       </div>
     );
   }
 }
 
-
 class Demo extends React.Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    // eslint-disable-next-line
+    if (nextProps.name === this.props.name) {
+      return false
+    }
+    return true;
+  }
   render() {
     console.log('Demo render 执行中');
     return (
       <div>
-        <h2>I am Demo</h2>
+        <h2>I am Demo,{ this.props.name }</h2>
       </div>
     );
   }
