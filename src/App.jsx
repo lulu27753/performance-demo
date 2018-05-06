@@ -41,14 +41,14 @@ class App extends React.Component {
   }
 }
 
-class Demo extends React.Component {
-  shouldComponentUpdate(nextProps, nextState) {
-    // eslint-disable-next-line
-    if (nextProps.name === this.props.name) {
-      return false
-    }
-    return true;
-  }
+class Demo extends React.PureComponent {
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   // eslint-disable-next-line
+  //   if (nextProps.name === this.props.name) {
+  //     return false
+  //   }
+  //   return true;
+  // }
   render() {
     console.log('Demo render 执行中');
     return (
