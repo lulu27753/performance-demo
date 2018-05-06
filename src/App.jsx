@@ -3,6 +3,8 @@ import './App.css';
 
 let obj = {name: 1, other: {title: 'demo'}};
 let obj1 = {name: 1, other: {title: 'demo'}};
+// 深层次的两棵树的比较，递归对比，复杂度太高，性能会有影响，不可接受
+// react建议，只做浅层对比
 function compareObj(obj1, obj2) {
   // 如果引用地址相同，则是同一个对象
   if (obj1 == obj2) {
@@ -67,14 +69,16 @@ class App extends React.Component {
   }
 }
 
-class Demo extends React.PureComponent {
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   // eslint-disable-next-line
-  //   if (nextProps.name === this.props.name) {
-  //     return false
-  //   }
-  //   return true;
-  // }
+class Demo extends React.Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (compareObj(nextProps, this.props)) {
+      return false
+    }
+    // if (nextProps.name === this.props.name) {
+    //   return false
+    // }
+    return true;
+  }
   render() {
     console.log('Demo render 执行中');
     return (
