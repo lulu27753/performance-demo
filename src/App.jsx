@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
 
-let obj = {name: 1};
-let obj1 = {name: 1};
+let obj = {name: 1, other: {title: 'demo'}};
+let obj1 = {name: 1, other: {title: 'demo'}};
 function compareObj(obj1, obj2) {
   // 如果引用地址相同，则是同一个对象
   if (obj1 == obj2) {
@@ -14,14 +14,16 @@ function compareObj(obj1, obj2) {
   }
   // 如果两个对象其中有一个key的值不等，则两个对象不等
   for (let key in obj1) {
-    if (obj1[key] !== obj2[key]) {
+    if (typeof obj1[key] === 'object') {
+      return compareObj(obj1[key], obj2[key])
+    } else if (obj1[key] !== obj2[key]) {
       return false
     }
   }
   return true;
 }
 
-console.log('比较两个对象是否相等', compareObj(obj, obj1));
+console.log('比较两个嵌套对象是否相等', compareObj(obj, obj1));
 
 
 
