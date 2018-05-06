@@ -1,6 +1,30 @@
 import React from 'react';
 import './App.css';
 
+let obj = {name: 1};
+let obj1 = {name: 1};
+function compareObj(obj1, obj2) {
+  // 如果引用地址相同，则是同一个对象
+  if (obj1 == obj2) {
+    return true;
+  }
+  // 如果两个对象的key值长度不等，则不可能相等
+  if (Object.keys(obj1).length !== Object.keys(obj2).length) {
+    return false;
+  }
+  // 如果两个对象其中有一个key的值不等，则两个对象不等
+  for (let key in obj1) {
+    if (obj1[key] !== obj2[key]) {
+      return false
+    }
+  }
+  return true;
+}
+
+console.log('比较两个对象是否相等', compareObj(obj, obj1));
+
+
+
 class App extends React.Component {
   constructor(props) {
     super(props);
